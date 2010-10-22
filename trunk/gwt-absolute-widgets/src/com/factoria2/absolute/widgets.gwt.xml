@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0.4//EN" "http://google-web-toolkit.googlecode.com/svn/tags/2.0.4/distro-source/core/src/gwt-module.dtd">
+<module>
+	
+	<inherits name="com.google.gwt.user.User" />
+	<source path="widgets"/>
+
+	<!-- Deferred binding of: com.factoria2.absolute.widgets.aspect.background.LinearGradientBackground -->
+	<replace-with class="com.factoria2.absolute.widgets.aspect.background.LinearGradientBackground.ImplementationFirefox">
+		<when-type-is class="com.factoria2.absolute.widgets.aspect.background.LinearGradientBackground.Implementation" />
+		<when-property-is name="user.agent" value="gecko1_8" />
+	</replace-with>
+	<replace-with class="com.factoria2.absolute.widgets.aspect.background.LinearGradientBackground.ImplementationWebkit">
+		<when-type-is class="com.factoria2.absolute.widgets.aspect.background.LinearGradientBackground.Implementation" />
+		<when-property-is name="user.agent" value="safari" />
+	</replace-with>
+
+
+<!--	<replace-with class="com.google.gwt.user.client.impl.DOMImplOpera">-->
+<!--		<when-type-is class="com.google.gwt.user.client.impl.DOMImpl" />-->
+<!--		<when-property-is name="user.agent" value="opera" />-->
+<!--	</replace-with>-->
+<!---->
+<!--	<replace-with class="com.google.gwt.user.client.impl.DOMImplSafari">-->
+<!--		<when-type-is class="com.google.gwt.user.client.impl.DOMImpl" />-->
+<!--		<when-property-is name="user.agent" value="safari" />-->
+<!--	</replace-with>-->
+<!---->
+<!--	<replace-with class="com.google.gwt.user.client.impl.DOMImplIE8">-->
+<!--		<when-type-is class="com.google.gwt.user.client.impl.DOMImpl" />-->
+<!--		<when-property-is name="user.agent" value="ie8" />-->
+<!--	</replace-with>-->
+<!---->
+<!--	<replace-with class="com.google.gwt.user.client.impl.DOMImplIE6">-->
+<!--		<when-type-is class="com.google.gwt.user.client.impl.DOMImpl" />-->
+<!--		<when-property-is name="user.agent" value="ie6" />-->
+<!--	</replace-with>-->
+<!---->
+<!--	<replace-with class="com.google.gwt.user.client.impl.DOMImplMozilla">-->
+<!--		<when-type-is class="com.google.gwt.user.client.impl.DOMImpl" />-->
+<!--		<when-property-is name="user.agent" value="gecko1_8" />-->
+<!--	</replace-with>-->
+<!---->
+<!--	<replace-with class="com.google.gwt.user.client.impl.DOMImplMozillaOld">-->
+<!--		<when-type-is class="com.google.gwt.user.client.impl.DOMImpl" />-->
+<!--		<when-property-is name="user.agent" value="gecko" />-->
+<!--	</replace-with>-->
+	
+</module>

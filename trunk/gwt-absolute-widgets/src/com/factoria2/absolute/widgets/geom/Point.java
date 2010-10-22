@@ -2,16 +2,17 @@ package com.factoria2.absolute.widgets.geom;
 
 /**
  * Points are read-only
+ * 
  * @author Iván
- *
+ * 
  */
 public class Point {
-	
-	public static final Point ORIGIN = new Point(0,0);
-	
+
+	public static final Point ORIGIN = new Point(0, 0);
+
 	private int x;
 	private int y;
-	
+
 	public Point(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -26,12 +27,12 @@ public class Point {
 	}
 
 	public Point clone() {
-		return new Point(x,y);
+		return new Point(x, y);
 	}
-	
+
 	@Override
 	public String toString() {
-		return "("+x+","+y+")";
+		return "(" + x + "," + y + ")";
 	}
 
 	@Override
@@ -59,18 +60,23 @@ public class Point {
 		return true;
 	}
 
-	public Point moveBy(int deltaX, int deltaY) {
+	public Point getOpposite() {
+		return new Point(-getX(), -getY());
+	}
+
+	public Point moveBy(Point p) {
 		Point point = this.clone();
-		point.x += deltaX;
-		point.y += deltaY;
+		point.x += p.getX();
+		point.y += p.getY();
 		return point;
 	}
 
-	public Point moveTo(int x, int y) {
-		Point point = this.clone();
-		point.x = x;
-		point.y = y;
-		return point;
+	public Point offsetTo(Point p) {
+		return new Point(p.getX() - x, p.getY() - y);
 	}
-	
+
+	public Size asSize() {
+		return new Size(x, y);
+	}
+
 }
