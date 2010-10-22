@@ -2,26 +2,27 @@ package com.factoria2.absolute.widgets.geom;
 
 /**
  * Insets are read-only.
+ * 
  * @author Iván
- *
+ * 
  */
 public class Insets {
-	
-	public static final Insets NONE = new Insets(0,0,0,0);
-	
+
+	public static final Insets NONE = new Insets(0, 0, 0, 0);
+
 	private int left;
 	private int top;
 	private int right;
 	private int bottom;
-	
-	public Insets(int all) { 
-		this(all,all,all,all);
+
+	public Insets(int all) {
+		this(all, all, all, all);
 	}
-	
-	public Insets(int topBottom,int leftRight) { 
-		this(leftRight,topBottom,leftRight,topBottom);
+
+	public Insets(int topBottom, int leftRight) {
+		this(leftRight, topBottom, leftRight, topBottom);
 	}
-	
+
 	public Insets(int left, int top, int right, int bottom) {
 		this.left = left;
 		this.top = top;
@@ -45,13 +46,21 @@ public class Insets {
 		return bottom;
 	}
 
+	public Point getOffset() {
+		return new Point(left, top);
+	}
+
+	public Size getAggregatedSize() {
+		return new Size(left + right, top + bottom);
+	}
+
 	public Insets clone() {
-		return new Insets(left,top,right,bottom);
+		return new Insets(left, top, right, bottom);
 	}
 
 	@Override
 	public String toString() {
-		return "["+left+","+top+","+right+","+bottom+"]";
+		return "[" + left + "," + top + "," + right + "," + bottom + "]";
 	}
 
 	@Override
@@ -84,6 +93,5 @@ public class Insets {
 			return false;
 		return true;
 	}
-	
-	
+
 }

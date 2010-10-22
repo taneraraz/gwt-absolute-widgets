@@ -89,6 +89,14 @@ public class Color {
 		return new Color(red,green,blue,opacity);
 	}
 
+	public String getCssValue() {
+		if( opacity!=null ) {
+			return "rgba("+red+","+green+","+blue+","+opacity+")";
+		} else {
+			return "rgb("+red+","+green+","+blue+")";
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return getCssValue();
@@ -128,12 +136,4 @@ public class Color {
 		return true;
 	}
 
-	public String getCssValue() {
-		if( opacity!=null ) {
-			return "rgba("+red+","+green+","+blue+","+opacity+")";
-		} else {
-			return "rgb("+red+","+green+","+blue+")";
-		}
-	}
-	
 }

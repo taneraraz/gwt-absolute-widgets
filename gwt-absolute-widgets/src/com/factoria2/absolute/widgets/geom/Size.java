@@ -1,17 +1,19 @@
 package com.factoria2.absolute.widgets.geom;
 
+
 /**
  * Sizes are read-only
+ * 
  * @author Iván
- *
+ * 
  */
 public class Size {
 
-	public static final Size EMPTYNESS = new Size(0,0);
-	
+	public static final Size EMPTYNESS = new Size(0, 0);
+
 	private int width;
 	private int height;
-	
+
 	public Size(int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -26,12 +28,12 @@ public class Size {
 	}
 
 	public Size clone() {
-		return new Size(width,height);
+		return new Size(width, height);
 	}
 
 	@Override
 	public String toString() {
-		return "["+width+"x"+height+"]";
+		return "[" + width + "x" + height + "]";
 	}
 
 	@Override
@@ -59,18 +61,18 @@ public class Size {
 		return true;
 	}
 
-	public Size shrinkBy(int deltaWidth, int deltaHeight) {
+	public Size shrinkBy(Size s) {
 		Size size = this.clone();
-		size.width -= deltaWidth;
-		size.height -= deltaHeight;
+		size.width -= s.getWidth();
+		size.height -= s.getHeight();
 		return size;
 	}
 
-	public Size resizeTo(int width, int height) {
+	public Size growBy(Size s) {
 		Size size = this.clone();
-		size.width = width;
-		size.height = height;
+		size.width += s.getWidth();
+		size.height += s.getHeight();
 		return size;
 	}
-	
+
 }

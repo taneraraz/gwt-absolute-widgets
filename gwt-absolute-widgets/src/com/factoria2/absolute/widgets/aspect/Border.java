@@ -9,6 +9,10 @@ import com.factoria2.absolute.widgets.geom.Insets;
  */
 public class Border {
 
+	public static final Border SOLID_BLACK = new Border(Type.SOLID,1,0,Color.BLACK); 
+	public static final Border SOLID_WHITE = new Border(Type.SOLID,1,0,Color.WHITE);
+	public static final Border SOLID_RED = new Border(Type.SOLID,1,0,Color.RED);
+	
 	public enum Type {
 		DOTTED("dotted"), 
 		DASHED("dashed"),
