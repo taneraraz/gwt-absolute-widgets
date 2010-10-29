@@ -1,9 +1,11 @@
 package com.factoria2.absolute.widgets.aspect.background;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.factoria2.absolute.widgets.aspect.Background;
-import com.factoria2.absolute.widgets.aspect.Color;
+import com.factoria2.absolute.widgets.aspect.value.Color;
 
 public class ColorBackground extends Background {
 
@@ -26,7 +28,7 @@ public class ColorBackground extends Background {
 	public static final ColorBackground CYAN = new ColorBackground(Color.CYAN);
 	public static final ColorBackground MAGENTA = new ColorBackground(Color.MAGENTA);
 	public static final ColorBackground YELLOW = new ColorBackground(Color.YELLOW);
-	
+
 	public static final ColorBackground RED_75 = new ColorBackground(Color.RED_75);
 	public static final ColorBackground GREEN_75 = new ColorBackground(Color.GREEN_75);
 	public static final ColorBackground BLUE_75 = new ColorBackground(Color.BLUE_75);
@@ -49,18 +51,21 @@ public class ColorBackground extends Background {
 	public static final ColorBackground YELLOW_25 = new ColorBackground(Color.YELLOW_25);
 
 	private Color color;
+	private Map<String, String> cssProps = new HashMap<String, String>();
 
-	public ColorBackground( Color color ) {
+	public ColorBackground(final Color color) {
 		this.color = color;
+		cssProps.put("background", color.getCssValue());
+		cssProps = Collections.unmodifiableMap(cssProps);
 	}
-	
+
 	public Color getColor() {
 		return color;
 	}
 
 	@Override
-	public Map<String,String> getCssValues() {
-		return background(color.getCssValue());
+	public Map<String, String> getCssProperties() {
+		return cssProps;
 	}
 
 }

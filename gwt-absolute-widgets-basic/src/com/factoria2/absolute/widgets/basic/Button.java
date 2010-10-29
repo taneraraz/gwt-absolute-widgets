@@ -5,6 +5,7 @@ import com.factoria2.absolute.widgets.geom.Rectangle;
 import com.factoria2.absolute.widgets.geom.Size;
 import com.factoria2.absolute.widgets.tools.TextSizer;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 public class Button extends AbsWidget {
 
@@ -15,21 +16,13 @@ public class Button extends AbsWidget {
 		this("");
 	}
 
-	public Button(String text) {
+	public Button(final String text) {
 		button = new com.google.gwt.user.client.ui.Button(text);
 		addChild(button);
 	}
 
-	public String getText() {
-		return button.getHTML();
-	}
-
-	public void setText(String text) {
-		button.setHTML(text);
-	}
-
-	public void addClickHandler(ClickHandler handler) {
-		button.addClickHandler(handler);
+	public HandlerRegistration addClickHandler(final ClickHandler handler) {
+		return button.addClickHandler(handler);
 	}
 
 	@Override
@@ -42,8 +35,16 @@ public class Button extends AbsWidget {
 		return size;
 	}
 
+	public String getText() {
+		return button.getHTML();
+	}
+
+	public void setText(final String text) {
+		button.setHTML(text);
+	}
+
 	@Override
-	protected void layoutChildren(Rectangle clientBounds) {
+	protected void layoutChildren(final Rectangle clientBounds) {
 		setChildBounds(button, clientBounds);
 	}
 

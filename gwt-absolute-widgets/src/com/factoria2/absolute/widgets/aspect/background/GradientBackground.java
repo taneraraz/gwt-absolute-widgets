@@ -1,7 +1,7 @@
 package com.factoria2.absolute.widgets.aspect.background;
 
 import com.factoria2.absolute.widgets.aspect.Background;
-import com.factoria2.absolute.widgets.aspect.Color;
+import com.factoria2.absolute.widgets.aspect.value.Color;
 
 //TODO: support radial gradients
 public abstract class GradientBackground extends Background {
