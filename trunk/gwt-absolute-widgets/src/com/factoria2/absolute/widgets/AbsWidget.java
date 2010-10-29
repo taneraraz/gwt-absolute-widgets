@@ -1,21 +1,23 @@
 package com.factoria2.absolute.widgets;
 
 import java.util.Map;
-import java.util.Map.Entry;
 
 import com.factoria2.absolute.widgets.aspect.Background;
 import com.factoria2.absolute.widgets.aspect.Border;
-import com.factoria2.absolute.widgets.aspect.Color;
 import com.factoria2.absolute.widgets.aspect.Font;
+import com.factoria2.absolute.widgets.aspect.HasCssProperties;
 import com.factoria2.absolute.widgets.aspect.Reflection;
 import com.factoria2.absolute.widgets.aspect.Shadow;
+import com.factoria2.absolute.widgets.aspect.value.Color;
 import com.factoria2.absolute.widgets.geom.Insets;
 import com.factoria2.absolute.widgets.geom.Point;
 import com.factoria2.absolute.widgets.geom.Rectangle;
 import com.factoria2.absolute.widgets.geom.Size;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -23,10 +25,11 @@ import com.google.gwt.user.client.ui.Widget;
 // TODO: support text wrapping elipsis in labels
 // TODO: support transitions and transforms
 // TODO: support animations
-public class AbsWidget extends Composite {
+// TODO: reset all inherited CSS attributes when constructing
+public class AbsWidget extends Composite implements HasClickHandlers {
 
 	private AbsWidget parent;
-	private AbsolutePanel panel = new AbsolutePanel();
+	private AbsWidgetPanel panel = new AbsWidgetPanel();
 	private Element element = panel.getElement();
 	private Rectangle bounds;
 	private Rectangle cachedClientBounds;
@@ -37,6 +40,7 @@ public class AbsWidget extends Composite {
 	private Border border;
 	private Shadow shadow;
 	private Reflection reflection;
+	private int newChildZIndex = 1;
 
 	public AbsWidget() {
 		initWidget(panel);
@@ -53,9 +57,7 @@ public class AbsWidget extends Composite {
 		setCss("opacity", "");
 
 		font = Font.getDefault();
-		for (Map.Entry<String, String> entry : font.getCssValues().entrySet()) {
-			setCss(entry.getKey(), entry.getValue());
-		}
+		applyCssProperties(font);
 
 		color = Color.BLACK;
 		setCss("color", color.getCssValue());
@@ -65,149 +67,24 @@ public class AbsWidget extends Composite {
 
 		border = null;
 		setCss("border", "0");
-
-		shadow = null;
-		setCss("webkitBoxShadow", "");
-
-		reflection = null;
-		setCss("webkitBoxReflect", "");
 	}
 
-	// VISUAL ASPECT METHODS //////////////////////////////////////////////////
-
-	public double getOpacity() {
-		return opacity;
+	@Override
+	public HandlerRegistration addClickHandler(final ClickHandler handler) {
+		return panel.addClickHandler(handler);
 	}
 
-	public void setOpacity(double opacity) {
-		this.opacity = opacity;
-		if (opacity >= 0 && opacity < 1) {
-			setCss("opacity", Double.toString(opacity));
-		} else {
-			setCss("opacity", "");
-		}
-	}
-
-	public Border getBorder() {
-		return border;
-	}
-
-	public void setBorder(Border border) {
-		this.border = border;
-
-		boolean renderBorder = true;
-
-		if (border == null) {
-			renderBorder = false;
-		} else if (border.getWidth().equals(Insets.NONE)) {
-			renderBorder = false;
-		}
-
-		// TODO: llevarse esta logica al border de forma similar a como se hace con los backgrounds
-		if (renderBorder) {
-			setCss("borderStyle", border.getType().getCssValue());
-			setCss("borderColor", border.getColor().getCssValue());
-
-			Insets w = border.getWidth();
-			setCss("borderLeftWidth", w.getLeft() + "px");
-			setCss("borderTopWidth", w.getTop() + "px");
-			setCss("borderRightWidth", w.getRight() + "px");
-			setCss("borderBottomWidth", w.getBottom() + "px");
-
-			Insets r = border.getRadius();
-			if (!r.equals(Insets.NONE)) {
-				setCss("borderTopLeftRadius", r.getTop() + "px " + r.getLeft() + "px");
-				setCss("borderTopRightRadius", r.getTop() + "px " + r.getRight() + "px");
-				setCss("borderBottomLeftRadius", r.getBottom() + "px " + r.getLeft() + "px");
-				setCss("borderBottomRightRadius", r.getBottom() + "px " + r.getRight() + "px");
-			}
-
-		} else {
-			setCss("borderStyle", "");
-			setCss("borderColor", "");
-			setCss("borderTopLeftRadius", "");
-			setCss("borderTopRightRadius", "");
-			setCss("borderBottomLeftRadius", "");
-			setCss("borderBottomRightRadius", "");
-			setCss("borderWidth", "");
-		}
-
-		setBounds(bounds);
-	}
-
-	public void setBackground(Background background) {
-		if (this.background != null) {
-			for (Entry<String, String> e : background.getCssValues().entrySet()) {
-				setCss(e.getKey(), "");
-			}
-		}
-		this.background = background;
-		if (this.background != null) {
-			for (Entry<String, String> e : background.getCssValues().entrySet()) {
-				setCss(e.getKey(), e.getValue());
-			}
-		}
+	public final AbsWidget getAbsParent() {
+		return parent;
 	}
 
 	public Background getBackground() {
 		return background;
 	}
 
-	public void setShadow(Shadow shadow) {
-		this.shadow = shadow;
-		if (shadow == null) {
-			setCss("webkitBoxShadow", "");
-		} else {
-			setCss("webkitBoxShadow", shadow.getCssValue());
-		}
+	public Border getBorder() {
+		return border;
 	}
-
-	public Shadow getShadow() {
-		return shadow;
-	}
-
-	public void setReflection(Reflection reflection) {
-		this.reflection = reflection;
-		if (reflection == null) {
-			setCss("webkitBoxReflect", "");
-		} else {
-			setCss("webkitBoxReflect", reflection.getCssValue());
-		}
-	}
-
-	public Reflection getReflection() {
-		return reflection;
-	}
-
-	public Font getFont() {
-		return font;
-	}
-
-	public void setFont(Font font) {
-		if (font == null) {
-			if (this.font != null) {
-				for (String prop : this.font.getCssValues().keySet()) {
-					setCss(prop, "");
-				}
-			}
-		} else {
-			for (Map.Entry<String, String> entry : font.getCssValues().entrySet()) {
-				setCss(entry.getKey(), entry.getValue());
-			}
-		}
-		this.font = font;
-	}
-
-	public Color getColor() {
-		return color;
-	}
-
-	public void setColor(Color color) {
-		this.color = color;
-		setCss("color", color.getCssValue());
-	}
-
-	// POSITION AND SIZE METHODS //////////////////////////////////////////////
 
 	/**
 	 * Returns a copy of the bounds
@@ -229,31 +106,70 @@ public class AbsWidget extends Composite {
 		return cachedClientBounds;
 	}
 
-	public final void setBounds(int x, int y, Size size) {
-		setBounds(new Rectangle(x, y, size.getWidth(), size.getHeight()));
+	public Color getColor() {
+		return color;
 	}
 
-	public final void setBounds(int x, int y, int width, int height) {
+	public Font getFont() {
+		return font;
+	}
+
+	public double getOpacity() {
+		return opacity;
+	}
+
+	public Size getPreferredSize() {
+		return Size.EMPTYNESS;
+	}
+
+	public Reflection getReflection() {
+		return reflection;
+	}
+
+	public Shadow getShadow() {
+		return shadow;
+	}
+
+	public final int getZIndex() {
+		return Integer.parseInt(getCss("zIndex"));
+	}
+
+	public final void growBy(final Size size) {
+		setSize(getBounds().getSize().growBy(size));
+	}
+
+	// POSITION AND SIZE METHODS //////////////////////////////////////////////
+
+	public final void moveBy(final Point offset) {
+		setLocation(getBounds().getLocation().moveBy(offset));
+	}
+
+	public final void relayout() {
+		layoutChildren(getClientBounds());
+	}
+
+	public final void setBackground(final Background background) {
+		unapplyCssProperties(this.background);
+		this.background = background;
+		applyCssProperties(this.background);
+	}
+
+	public final void setBorder(final Border border) {
+		unapplyCssProperties(this.border);
+		this.border = border;
+		applyCssProperties(this.border);
+		setBounds(bounds);
+	}
+
+	public final void setBounds(final int x, final int y, final int width, final int height) {
 		setBounds(new Rectangle(x, y, width, height));
 	}
 
-	public final void setLocation(int x, int y) {
-		setBounds(bounds.moveTo(new Point(x, y)));
+	public final void setBounds(final int x, final int y, final Size size) {
+		setBounds(new Rectangle(x, y, size.getWidth(), size.getHeight()));
 	}
 
-	public final void setLocation(Point location) {
-		setBounds(bounds.moveTo(location));
-	}
-
-	public final void setSize(int width, int height) {
-		setBounds(bounds.resizeTo(new Size(width, height)));
-	}
-
-	public final void setSize(Size size) {
-		setBounds(bounds.resizeTo(size));
-	}
-
-	public final void setBounds(Rectangle bounds) {
+	public final void setBounds(final Rectangle bounds) {
 		this.bounds = bounds;
 		this.cachedClientBounds = null;
 
@@ -272,35 +188,100 @@ public class AbsWidget extends Composite {
 		relayout();
 	}
 
-	public final void moveBy(Point offset) {
-		setLocation(getBounds().getLocation().moveBy(offset));
+	public void setColor(final Color color) {
+		this.color = color;
+		setCss("color", color.getCssValue());
 	}
 
-	public final void growBy(Size size) {
-		setSize(getBounds().getSize().growBy(size));
+	public void setFont(final Font font) {
+		unapplyCssProperties(this.font);
+		this.font = font;
+		applyCssProperties(this.font);
 	}
 
-	public Size getPreferredSize() {
-		return Size.EMPTYNESS;
+	@Override
+	@Deprecated
+	public final void setHeight(final String height) {
+		throw new UnsupportedOperationException("VioletWidgets must always be positioned absolute and measured in pixels");
 	}
 
-	public final void relayout() {
-		layoutChildren(getClientBounds());
+	public final void setLocation(final int x, final int y) {
+		setBounds(bounds.moveTo(new Point(x, y)));
 	}
 
-	// HIERARCHY METHODS //////////////////////////////////////////////////////
-
-	public final AbsWidget getAbsParent() {
-		return parent;
+	public final void setLocation(final Point location) {
+		setBounds(bounds.moveTo(location));
 	}
 
-	// HELPER METHODS TO BE OVERRIDEN OR CALLED FROM SUBCLASSES ///////////////
+	public void setOpacity(final double opacity) {
+		this.opacity = opacity;
+		if (opacity >= 0 && opacity < 1) {
+			setCss("opacity", Double.toString(opacity));
+		} else {
+			setCss("opacity", "");
+		}
+	}
 
-	protected void addChild(Widget widget) {
+	@Override
+	@Deprecated
+	public final void setPixelSize(final int width, final int height) {
+		throw new UnsupportedOperationException("VioletWidgets must always be positioned absolute and measured in pixels");
+	}
+
+	public void setReflection(final Reflection reflection) {
+		unapplyCssProperties(this.reflection);
+		this.reflection = reflection;
+		applyCssProperties(this.reflection);
+	}
+
+	public void setShadow(final Shadow shadow) {
+		unapplyCssProperties(this.shadow);
+		this.shadow = shadow;
+		applyCssProperties(this.shadow);
+	}
+
+	public final void setSize(final int width, final int height) {
+		setBounds(bounds.resizeTo(new Size(width, height)));
+	}
+
+	public final void setSize(final Size size) {
+		setBounds(bounds.resizeTo(size));
+	}
+
+	@Override
+	@Deprecated
+	public final void setSize(final String width, final String height) {
+		throw new UnsupportedOperationException("VioletWidgets must always be positioned absolute and measured in pixels");
+	}
+
+	@Override
+	@Deprecated
+	public final void setWidth(final String width) {
+		throw new UnsupportedOperationException("VioletWidgets must always be positioned absolute and measured in pixels");
+	}
+
+	public final void setZIndex(final int zIndex) {
+		setCss("zIndex", Integer.toString(zIndex));
+	}
+
+	protected void addChild(final Widget widget) {
 		panel.add(widget);
 		if (widget instanceof AbsWidget) {
-			((AbsWidget) widget).parent = this;
+			AbsWidget absWidget = (AbsWidget) widget;
+			absWidget.setZIndex(newChildZIndex++);
+			absWidget.parent = this;
 		}
+	}
+
+	protected final String getCss(final String property) {
+		return DOM.getStyleAttribute(element, property);
+	}
+
+	protected final String getJsProperty(final String property) {
+		return DOM.getElementProperty(element, property);
+	}
+
+	protected void layoutChildren(final Rectangle clientBounds) {
 	}
 
 	/**
@@ -312,7 +293,7 @@ public class AbsWidget extends Composite {
 	 * @param width
 	 * @param height
 	 */
-	protected final void setChildBounds(Widget widget, int x, int y, int width, int height) {
+	protected final void setChildBounds(final Widget widget, final int x, final int y, final int width, final int height) {
 		checkWidgetParent(widget);
 		Element elem = widget.getElement();
 		DOM.setStyleAttribute(elem, "position", "absolute");
@@ -328,53 +309,42 @@ public class AbsWidget extends Composite {
 	 * @param widget
 	 * @param bounds
 	 */
-	protected final void setChildBounds(Widget widget, Rectangle bounds) {
+	protected final void setChildBounds(final Widget widget, final Rectangle bounds) {
 		setChildBounds(widget, bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 	}
 
-	protected final void setChildCss(Widget child, String property, String value) {
+	protected final void setChildCss(final Widget child, final String property, final String value) {
 		DOM.setStyleAttribute(child.getElement(), property, value);
 	}
 
-	protected final void setCss(String property, String value) {
+	protected final void setCss(final String property, final String value) {
 		DOM.setStyleAttribute(element, property, value);
 	}
 
-	protected void layoutChildren(Rectangle clientBounds) {
+	protected final void setJsProperty(final String property, final String value) {
+		DOM.setElementProperty(element, property, value);
 	}
 
-	// PRIVATE HELPER METHODS /////////////////////////////////////////////////
+	private void applyCssProperties(final HasCssProperties cssProps) {
+		if (cssProps != null) {
+			for (Map.Entry<String, String> prop : cssProps.getCssProperties().entrySet()) {
+				setCss(prop.getKey(), prop.getValue());
+			}
+		}
+	}
 
-	private void checkWidgetParent(Widget widget) {
+	private void checkWidgetParent(final Widget widget) {
 		if (widget.getParent() != panel) {
 			throw new IllegalArgumentException("Widget " + widget + " is not a child of this");
 		}
 	}
 
-	// METHODS FROM GWT THAT SHOULDN'T BE USED ////////////////////////////////
-
-	@Override
-	@Deprecated
-	public final void setHeight(String height) {
-		throw new UnsupportedOperationException("VioletWidgets must always be positioned absolute and measured in pixels");
-	}
-
-	@Override
-	@Deprecated
-	public final void setPixelSize(int width, int height) {
-		throw new UnsupportedOperationException("VioletWidgets must always be positioned absolute and measured in pixels");
-	}
-
-	@Override
-	@Deprecated
-	public final void setSize(String width, String height) {
-		throw new UnsupportedOperationException("VioletWidgets must always be positioned absolute and measured in pixels");
-	}
-
-	@Override
-	@Deprecated
-	public final void setWidth(String width) {
-		throw new UnsupportedOperationException("VioletWidgets must always be positioned absolute and measured in pixels");
+	private void unapplyCssProperties(final HasCssProperties cssProps) {
+		if (cssProps != null) {
+			for (Map.Entry<String, String> prop : cssProps.getCssProperties().entrySet()) {
+				setCss(prop.getKey(), "");
+			}
+		}
 	}
 
 }

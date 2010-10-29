@@ -16,11 +16,11 @@ public class Label extends AbsWidget {
 		this("");
 	}
 
-	public Label(String text) {
+	public Label(final String text) {
 		this(text, null, null);
 	}
 
-	public Label(String text, Integer preferredWidth, Integer preferredHeight) {
+	public Label(final String text, final Integer preferredWidth, final Integer preferredHeight) {
 		this.preferredWidth = preferredWidth;
 		this.preferredHeight = preferredHeight;
 
@@ -29,28 +29,8 @@ public class Label extends AbsWidget {
 		addChild(label);
 	}
 
-	public String getText() {
-		return label.getText();
-	}
-
-	public void setText(String text) {
-		label.setText(text);
-	}
-
-	public Integer getPreferredWidth() {
-		return preferredWidth;
-	}
-
-	public void setPreferredWidth(Integer preferredWidth) {
-		this.preferredWidth = preferredWidth;
-	}
-
 	public Integer getPreferredHeight() {
 		return preferredHeight;
-	}
-
-	public void setPreferredHeight(Integer preferredHeight) {
-		this.preferredHeight = preferredHeight;
 	}
 
 	@Override
@@ -75,8 +55,29 @@ public class Label extends AbsWidget {
 		return prefSize;
 	}
 
+	public Integer getPreferredWidth() {
+		return preferredWidth;
+	}
+
+	public String getText() {
+		return label.getText();
+	}
+
+	public void setPreferredHeight(final Integer preferredHeight) {
+		this.preferredHeight = preferredHeight;
+	}
+
+	public void setPreferredWidth(final Integer preferredWidth) {
+		this.preferredWidth = preferredWidth;
+	}
+
+	public void setText(final String text) {
+		label.setText(text);
+	}
+
 	@Override
-	protected void layoutChildren(Rectangle clientBounds) {
+	protected void layoutChildren(final Rectangle clientBounds) {
+		setChildCss(label, "lineHeight", clientBounds.getHeight() + "px");
 		setChildBounds(label, clientBounds);
 	}
 
