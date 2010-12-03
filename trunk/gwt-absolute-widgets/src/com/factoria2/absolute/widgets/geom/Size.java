@@ -1,11 +1,9 @@
 package com.factoria2.absolute.widgets.geom;
 
-
 /**
  * Sizes are read-only
  * 
  * @author Iván
- * 
  */
 public class Size {
 
@@ -14,17 +12,9 @@ public class Size {
 	private int width;
 	private int height;
 
-	public Size(int width, int height) {
+	public Size(final int width, final int height) {
 		this.width = width;
 		this.height = height;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
 	}
 
 	public Size clone() {
@@ -32,8 +22,43 @@ public class Size {
 	}
 
 	@Override
-	public String toString() {
-		return "[" + width + "x" + height + "]";
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Size other = (Size) obj;
+		if (height != other.height) {
+			return false;
+		}
+		if (width != other.width) {
+			return false;
+		}
+		return true;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public Size getOpposite() {
+		return new Size(-width, -height);
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public Size growBy(final Size s) {
+		Size size = this.clone();
+		size.width += s.getWidth();
+		size.height += s.getHeight();
+		return size;
 	}
 
 	@Override
@@ -45,34 +70,16 @@ public class Size {
 		return result;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Size other = (Size) obj;
-		if (height != other.height)
-			return false;
-		if (width != other.width)
-			return false;
-		return true;
-	}
-
-	public Size shrinkBy(Size s) {
+	public Size shrinkBy(final Size s) {
 		Size size = this.clone();
 		size.width -= s.getWidth();
 		size.height -= s.getHeight();
 		return size;
 	}
 
-	public Size growBy(Size s) {
-		Size size = this.clone();
-		size.width += s.getWidth();
-		size.height += s.getHeight();
-		return size;
+	@Override
+	public String toString() {
+		return "[" + width + "x" + height + "]";
 	}
 
 }

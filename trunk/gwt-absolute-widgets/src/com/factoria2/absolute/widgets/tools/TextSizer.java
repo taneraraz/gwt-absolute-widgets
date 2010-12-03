@@ -6,7 +6,7 @@ import com.factoria2.absolute.widgets.aspect.Font;
 import com.factoria2.absolute.widgets.geom.Size;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class TextSizer {
@@ -17,7 +17,7 @@ public class TextSizer {
 		return instance;
 	}
 
-	private Label label = new Label();
+	private HTML label = new HTML();
 
 	public TextSizer() {
 		//		label.addClickHandler( new ClickHandler() {
@@ -62,7 +62,7 @@ public class TextSizer {
 	}
 
 	private void initLabel(final Font font, final String text, final Integer width, final Integer height) {
-		label.setText(text);
+		label.setHTML(text);
 
 		Element element = label.getElement();
 		for (Map.Entry<String, String> entry : font.getCssProperties().entrySet()) {

@@ -4,7 +4,6 @@ package com.factoria2.absolute.widgets.geom;
  * Insets are read-only.
  * 
  * @author Iván
- * 
  */
 public class Insets {
 
@@ -15,43 +14,19 @@ public class Insets {
 	private int right;
 	private int bottom;
 
-	public Insets(int all) {
+	public Insets(final int all) {
 		this(all, all, all, all);
 	}
 
-	public Insets(int topBottom, int leftRight) {
+	public Insets(final int topBottom, final int leftRight) {
 		this(leftRight, topBottom, leftRight, topBottom);
 	}
 
-	public Insets(int left, int top, int right, int bottom) {
+	public Insets(final int left, final int top, final int right, final int bottom) {
 		this.left = left;
 		this.top = top;
 		this.right = right;
 		this.bottom = bottom;
-	}
-
-	public int getLeft() {
-		return left;
-	}
-
-	public int getTop() {
-		return top;
-	}
-
-	public int getRight() {
-		return right;
-	}
-
-	public int getBottom() {
-		return bottom;
-	}
-
-	public Point getOffset() {
-		return new Point(left, top);
-	}
-
-	public Size getAggregatedSize() {
-		return new Size(left + right, top + bottom);
 	}
 
 	public Insets clone() {
@@ -59,8 +34,54 @@ public class Insets {
 	}
 
 	@Override
-	public String toString() {
-		return "[" + left + "," + top + "," + right + "," + bottom + "]";
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Insets other = (Insets) obj;
+		if (bottom != other.bottom) {
+			return false;
+		}
+		if (left != other.left) {
+			return false;
+		}
+		if (right != other.right) {
+			return false;
+		}
+		if (top != other.top) {
+			return false;
+		}
+		return true;
+	}
+
+	public Size getAggregatedSize() {
+		return new Size(left + right, top + bottom);
+	}
+
+	public int getBottom() {
+		return bottom;
+	}
+
+	public int getLeft() {
+		return left;
+	}
+
+	public Size getOffset() {
+		return new Size(left, top);
+	}
+
+	public int getRight() {
+		return right;
+	}
+
+	public int getTop() {
+		return top;
 	}
 
 	@Override
@@ -75,23 +96,8 @@ public class Insets {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Insets other = (Insets) obj;
-		if (bottom != other.bottom)
-			return false;
-		if (left != other.left)
-			return false;
-		if (right != other.right)
-			return false;
-		if (top != other.top)
-			return false;
-		return true;
+	public String toString() {
+		return "[" + left + "," + top + "," + right + "," + bottom + "]";
 	}
 
 }

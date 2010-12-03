@@ -1,16 +1,22 @@
 package com.factoria2.absolute.widgets.basic;
 
 import com.factoria2.absolute.widgets.AbsWidget;
+import com.factoria2.absolute.widgets.aspect.value.HAlignment;
 import com.factoria2.absolute.widgets.geom.Insets;
 import com.factoria2.absolute.widgets.geom.Rectangle;
 import com.factoria2.absolute.widgets.geom.Size;
 import com.factoria2.absolute.widgets.tools.TextSizer;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
 
+// TODO: horizontal and vertical alignment
 public class Label extends AbsWidget {
 
-	private com.google.gwt.user.client.ui.Label label;
+	private com.google.gwt.user.client.ui.HTML label;
 	private Integer preferredWidth;
 	private Integer preferredHeight;
+	private HAlignment horizontalAlignment = HAlignment.LEFT;
+	private String text;
 
 	public Label() {
 		this("");
@@ -24,9 +30,22 @@ public class Label extends AbsWidget {
 		this.preferredWidth = preferredWidth;
 		this.preferredHeight = preferredHeight;
 
-		label = new com.google.gwt.user.client.ui.Label(text);
+		label = new com.google.gwt.user.client.ui.HTML();
 		setChildCss(label, "cursor", "default");
+		setChildCss(label, "overflow", "hidden");
 		addChild(label);
+		label.addMouseDownHandler(new MouseDownHandler() {
+			@Override
+			public void onMouseDown(final MouseDownEvent event) {
+				event.preventDefault();
+			}
+		});
+
+		setText(text);
+	}
+
+	public HAlignment getHorizontalAlignment() {
+		return horizontalAlignment;
 	}
 
 	public Integer getPreferredHeight() {
@@ -39,13 +58,13 @@ public class Label extends AbsWidget {
 		if (preferredWidth != null && preferredHeight != null) {
 			prefSize = new Size(preferredWidth, preferredHeight);
 		} else if (preferredWidth != null) {
-			int height = TextSizer.getInstance().getHeight(getFont(), getText(), preferredWidth);
+			int height = TextSizer.getInstance().getHeight(getFont(), label.getHTML(), preferredWidth);
 			prefSize = new Size(preferredWidth, height);
 		} else if (preferredHeight != null) {
-			int width = TextSizer.getInstance().getWidth(getFont(), getText(), preferredHeight);
+			int width = TextSizer.getInstance().getWidth(getFont(), label.getHTML(), preferredHeight);
 			prefSize = new Size(width, preferredHeight);
 		} else {
-			prefSize = TextSizer.getInstance().getSize(getFont(), getText());
+			prefSize = TextSizer.getInstance().getSize(getFont(), label.getHTML());
 		}
 
 		if (getBorder() != null) {
@@ -60,7 +79,12 @@ public class Label extends AbsWidget {
 	}
 
 	public String getText() {
-		return label.getText();
+		return text;
+	}
+
+	public void setHorizontalAlignment(final HAlignment horizontalAlignment) {
+		this.horizontalAlignment = horizontalAlignment;
+		setChildCss(label, "textAlign", horizontalAlignment.getCssValue());
 	}
 
 	public void setPreferredHeight(final Integer preferredHeight) {
@@ -72,13 +96,22 @@ public class Label extends AbsWidget {
 	}
 
 	public void setText(final String text) {
-		label.setText(text);
+		this.text = text == null ? "" : text;
+		label.setHTML(escape(text));
 	}
 
 	@Override
 	protected void layoutChildren(final Rectangle clientBounds) {
-		setChildCss(label, "lineHeight", clientBounds.getHeight() + "px");
 		setChildBounds(label, clientBounds);
+	}
+
+	private String escape(final String text) {
+		if (text == null) {
+			return "";
+		} else {
+			// TODO: escapar %
+			return text.replaceAll(">", "&gt;").replaceAll("<", "&lt;").replaceAll("\\n", "<br>");
+		}
 	}
 
 }

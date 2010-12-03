@@ -6,43 +6,101 @@ import com.factoria2.absolute.widgets.geom.Rectangle;
 import com.factoria2.absolute.widgets.geom.Size;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 public class Image extends AbsWidget {
 
 	private static final MouseDownHandler preventDraggingHandler = new MouseDownHandler() {
 		@Override
-		public void onMouseDown(MouseDownEvent event) {
+		public void onMouseDown(final MouseDownEvent event) {
 			event.preventDefault();
 		}
 	};
 
+	private static final String NULL_IMAGE = "images/Image/blank.png";
+
 	private com.google.gwt.user.client.ui.Image image;
-	private Integer preferredWidth;
-	private Integer preferredHeight;
+	private Size imageSize;
 	private HandlerRegistration preventDraggingRegistration;
 
+	private String url;
+	private String hoverUrl;
+	private String clickUrl;
+
 	public Image() {
-		this("");
+		this(Size.EMPTYNESS, "");
 	}
 
-	public Image(String url) {
-		this(url, null, null);
+	public Image(final Size imageSize, final String url) {
+		this(imageSize, url, null, null);
 	}
 
-	public Image(String url, Integer preferredWidth, Integer preferredHeight) {
-		this.preferredWidth = preferredWidth;
-		this.preferredHeight = preferredHeight;
+	public Image(final Size imageSize, final String url, final String hoverUrl, final String clickUrl) {
+		this.imageSize = imageSize;
+		this.url = url;
+		this.hoverUrl = hoverUrl;
+		this.clickUrl = clickUrl;
 
-		image = new com.google.gwt.user.client.ui.Image(url);
+		image = new com.google.gwt.user.client.ui.Image();
+		setChildCss(image, "overflow", "hidden");
 		addChild(image);
+		addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(final MouseOverEvent event) {
+				if (hoverUrl != null) {
+					setImageUrlInternal(hoverUrl);
+				}
+			}
+		});
+		addMouseOutHandler(new MouseOutHandler() {
+			@Override
+			public void onMouseOut(final MouseOutEvent event) {
+				setImageUrlInternal(url);
+			}
+		});
+
+		setImageUrlInternal(url);
+	}
+
+	public String getClickUrl() {
+		return clickUrl;
+	}
+
+	public String getHoverUrl() {
+		return hoverUrl;
+	}
+
+	public Size getImageSize() {
+		return imageSize;
+	}
+
+	@Override
+	public Size getPreferredSize() {
+		Size prefSize = imageSize;
+		if (getBorder() != null) {
+			Insets border = getBorder().getWidth();
+			prefSize = prefSize.growBy(border.getAggregatedSize());
+		}
+		return prefSize;
+	}
+
+	public String getUrl() {
+		return url;
 	}
 
 	public boolean isDraggable() {
 		return preventDraggingRegistration == null;
 	}
 
-	public void setDraggable(boolean draggable) {
+	public void setClickUrl(final String clickUrl) {
+		this.clickUrl = clickUrl;
+	}
+
+	public void setDraggable(final boolean draggable) {
 		if (draggable && preventDraggingRegistration != null) {
 			preventDraggingRegistration.removeHandler();
 			preventDraggingRegistration = null;
@@ -51,53 +109,26 @@ public class Image extends AbsWidget {
 		}
 	}
 
-	public String getUrl() {
-		return image.getUrl();
+	public void setHoverUrl(final String hoverUrl) {
+		this.hoverUrl = hoverUrl;
 	}
 
-	public void setUrl(String url) {
-		image.setUrl(url);
+	public void setImageSize(final Size imageSize) {
+		this.imageSize = imageSize;
 	}
 
-	public Integer getPreferredWidth() {
-		return preferredWidth;
-	}
-
-	public void setPreferredWidth(Integer preferredWidth) {
-		this.preferredWidth = preferredWidth;
-	}
-
-	public Integer getPreferredHeight() {
-		return preferredHeight;
-	}
-
-	public void setPreferredHeight(Integer preferredHeight) {
-		this.preferredHeight = preferredHeight;
+	public void setUrl(final String url) {
+		this.url = url;
+		setImageUrlInternal(url);
 	}
 
 	@Override
-	public Size getPreferredSize() {
-		Size prefSize;
-		if (preferredWidth != null && preferredHeight != null) {
-			prefSize = new Size(preferredWidth, preferredHeight);
-		} else if (preferredWidth != null) {
-			prefSize = new Size(preferredWidth, image.getHeight());
-		} else if (preferredHeight != null) {
-			prefSize = new Size(image.getWidth(), preferredHeight);
-		} else {
-			prefSize = new Size(image.getWidth(), image.getHeight());
-		}
-
-		if (getBorder() != null) {
-			Insets border = getBorder().getWidth();
-			prefSize = prefSize.growBy(border.getAggregatedSize());
-		}
-		return prefSize;
-	}
-
-	@Override
-	protected void layoutChildren(Rectangle clientBounds) {
+	protected void layoutChildren(final Rectangle clientBounds) {
 		setChildBounds(image, clientBounds);
+	}
+
+	private void setImageUrlInternal(final String url) {
+		image.setUrl(url == null || url.equals("") ? NULL_IMAGE : url);
 	}
 
 }
