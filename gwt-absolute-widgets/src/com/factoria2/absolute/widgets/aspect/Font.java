@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Fonts are read-only
  * 
- * @author Iván
+ * @author Ivï¿½n
  */
 public class Font implements HasCssProperties {
 
@@ -68,23 +68,55 @@ public class Font implements HasCssProperties {
 
 		cssProps.put("fontFamily", name);
 		cssProps.put("fontSize", size + "px");
-		if (bold) {
-			cssProps.put("fontWeight", "bold");
-		}
-		if (italic) {
-			cssProps.put("fontStyle", "italic");
-		}
-		if (smallCaps) {
-			cssProps.put("fontVariant", "small-caps");
-		}
+		cssProps.put("fontWeight", bold ? "bold" : "normal");
+		cssProps.put("fontStyle", italic ? "italic" : "normal");
+		cssProps.put("fontVariant", smallCaps ? "small-caps" : "normal");
 		if (underline || strikeThrough) {
 			cssProps.put("textDecoration", (underline ? " underline" : "") + (strikeThrough ? " line-through" : ""));
+		} else {
+			cssProps.put("textDecoration", "none");
 		}
 		cssProps = Collections.unmodifiableMap(cssProps);
 	}
 
 	public Font clone() {
 		return new Font(name, size, bold, italic, underline, strikeThrough, smallCaps);
+	}
+
+	public Font deriveBoldFont(final boolean bold) {
+		return deriveFont(null, null, bold, null, null, null, null);
+	}
+
+	public Font deriveFont(final int size) {
+		return deriveFont(null, size, null, null, null, null, null);
+	}
+
+	public Font deriveFont(final String name) {
+		return deriveFont(name, null, null, null, null, null, null);
+	}
+
+	public Font deriveFont(final String name, final Integer size) {
+		return deriveFont(name, size, null, null, null, null, null);
+	}
+
+	public Font deriveFont(final String name, final Integer size, final Boolean bold, final Boolean italic, final Boolean underline, final Boolean strikeThrough, final Boolean smallCaps) {
+		return new Font(name == null ? this.name : name, size == null ? this.size : size, bold == null ? this.bold : bold, italic == null ? this.italic : italic, underline == null ? this.underline : underline, strikeThrough == null ? this.strikeThrough : strikeThrough, smallCaps == null ? this.smallCaps : smallCaps);
+	}
+
+	public Font deriveItalicFont(final boolean italic) {
+		return deriveFont(null, null, null, italic, null, null, null);
+	}
+
+	public Font deriveSmallCapsFont(final boolean smallCaps) {
+		return deriveFont(null, null, null, null, null, null, smallCaps);
+	}
+
+	public Font deriveStrikeThroughFont(final boolean strikeThrough) {
+		return deriveFont(null, null, null, null, null, strikeThrough, null);
+	}
+
+	public Font deriveUnderlineFont(final boolean underlineFont) {
+		return deriveFont(null, null, null, null, underlineFont, null, null);
 	}
 
 	@Override
@@ -182,5 +214,4 @@ public class Font implements HasCssProperties {
 	public String toString() {
 		return getCssProperties().toString();
 	}
-
 }

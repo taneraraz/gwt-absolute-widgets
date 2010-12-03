@@ -87,7 +87,7 @@ public class Rectangle {
 
 	public Rectangle growSizeBy(final Size size) {
 		Rectangle rc = this.clone();
-		rc.size = size.growBy(size);
+		rc.size = rc.size.growBy(size);
 		return rc;
 	}
 
@@ -100,7 +100,7 @@ public class Rectangle {
 		return result;
 	}
 
-	public Rectangle moveBy(final Point offset) {
+	public Rectangle moveBy(final Size offset) {
 		return new Rectangle(location.moveBy(offset), this.size);
 	}
 

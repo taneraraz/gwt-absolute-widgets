@@ -9,6 +9,9 @@ import com.factoria2.absolute.widgets.aspect.value.Color;
 //TODO: support multiple browsers with GWT.Create
 public class Shadow implements HasCssProperties {
 
+	public static final Shadow STANDARD_BLACK = new Shadow(Color.BLACK, 3, 3, 10);
+	public static final Shadow STANDARD_WHITE = new Shadow(Color.WHITE, 3, 3, 10);
+
 	private int vertical;
 	private int horizontal;
 	private int smoothness;

@@ -1,6 +1,5 @@
 package com.factoria2.absolute.widgets.aspect.value;
 
-
 /**
  * Colors are read-only
  * 
@@ -8,6 +7,8 @@ package com.factoria2.absolute.widgets.aspect.value;
  */
 // TODO: support HSL color model
 public class Color implements HasCssValue {
+
+	public static final Color TRANSPARENT = new Color(255, 255, 255, 0);
 
 	public static final Color WHITE = new Color(255, 255, 255);
 	public static final Color BLACK = new Color(0, 0, 0);
