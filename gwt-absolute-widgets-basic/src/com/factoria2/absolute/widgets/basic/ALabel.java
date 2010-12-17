@@ -1,16 +1,16 @@
 package com.factoria2.absolute.widgets.basic;
 
-import com.factoria2.absolute.widgets.AbsWidget;
-import com.factoria2.absolute.widgets.aspect.value.HAlignment;
-import com.factoria2.absolute.widgets.geom.Insets;
-import com.factoria2.absolute.widgets.geom.Rectangle;
-import com.factoria2.absolute.widgets.geom.Size;
-import com.factoria2.absolute.widgets.tools.TextSizer;
+import com.factoria2.absolute.widgets.core.AbsWidget;
+import com.factoria2.absolute.widgets.core.aspect.value.HAlignment;
+import com.factoria2.absolute.widgets.core.geom.Insets;
+import com.factoria2.absolute.widgets.core.geom.Rectangle;
+import com.factoria2.absolute.widgets.core.geom.Size;
+import com.factoria2.absolute.widgets.core.tools.TextSizer;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 
 // TODO: horizontal and vertical alignment
-public class Label extends AbsWidget {
+public class ALabel extends AbsWidget {
 
 	private com.google.gwt.user.client.ui.HTML label;
 	private Integer preferredWidth;
@@ -18,15 +18,15 @@ public class Label extends AbsWidget {
 	private HAlignment horizontalAlignment = HAlignment.LEFT;
 	private String text;
 
-	public Label() {
+	public ALabel() {
 		this("");
 	}
 
-	public Label(final String text) {
+	public ALabel(final String text) {
 		this(text, null, null);
 	}
 
-	public Label(final String text, final Integer preferredWidth, final Integer preferredHeight) {
+	public ALabel(final String text, final Integer preferredWidth, final Integer preferredHeight) {
 		this.preferredWidth = preferredWidth;
 		this.preferredHeight = preferredHeight;
 

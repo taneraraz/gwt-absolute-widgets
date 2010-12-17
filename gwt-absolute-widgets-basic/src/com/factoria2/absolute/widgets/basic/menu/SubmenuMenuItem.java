@@ -1,20 +1,20 @@
 package com.factoria2.absolute.widgets.basic.menu;
 
-import com.factoria2.absolute.widgets.aspect.value.HAlignment;
-import com.factoria2.absolute.widgets.basic.Image;
+import com.factoria2.absolute.widgets.basic.AImage;
 import com.factoria2.absolute.widgets.basic.event.CommandEvent;
 import com.factoria2.absolute.widgets.basic.event.CommandHandler;
 import com.factoria2.absolute.widgets.basic.event.ItemSelectionAdapter;
 import com.factoria2.absolute.widgets.basic.event.ItemSelectionEvent;
-import com.factoria2.absolute.widgets.geom.Rectangle;
-import com.factoria2.absolute.widgets.geom.Size;
+import com.factoria2.absolute.widgets.core.aspect.value.HAlignment;
+import com.factoria2.absolute.widgets.core.geom.Rectangle;
+import com.factoria2.absolute.widgets.core.geom.Size;
 
 public class SubmenuMenuItem extends BasicMenuItem {
 
 	private static final Size ICON_EXTRA_SIZE = new Size(ICON_SIZE.getWidth(), 0);
 
 	private Menu submenu;
-	private Image expandIcon;
+	private AImage expandIcon;
 
 	private HAlignment alignment = HAlignment.LEFT;
 
@@ -35,7 +35,7 @@ public class SubmenuMenuItem extends BasicMenuItem {
 
 		this.submenu = submenu;
 
-		this.expandIcon = new Image(ICON_SIZE, "images/SubmenuMenuItem/expandIcon.png");
+		this.expandIcon = new AImage(ICON_SIZE, "images/SubmenuMenuItem/expandIcon.png");
 		addChild(expandIcon);
 
 		addChild(submenu);

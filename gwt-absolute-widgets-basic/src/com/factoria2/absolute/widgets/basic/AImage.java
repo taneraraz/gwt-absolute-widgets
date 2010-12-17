@@ -1,9 +1,9 @@
 package com.factoria2.absolute.widgets.basic;
 
-import com.factoria2.absolute.widgets.AbsWidget;
-import com.factoria2.absolute.widgets.geom.Insets;
-import com.factoria2.absolute.widgets.geom.Rectangle;
-import com.factoria2.absolute.widgets.geom.Size;
+import com.factoria2.absolute.widgets.core.AbsWidget;
+import com.factoria2.absolute.widgets.core.geom.Insets;
+import com.factoria2.absolute.widgets.core.geom.Rectangle;
+import com.factoria2.absolute.widgets.core.geom.Size;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -12,7 +12,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
-public class Image extends AbsWidget {
+public class AImage extends AbsWidget {
 
 	private static final MouseDownHandler preventDraggingHandler = new MouseDownHandler() {
 		@Override
@@ -31,15 +31,15 @@ public class Image extends AbsWidget {
 	private String hoverUrl;
 	private String clickUrl;
 
-	public Image() {
+	public AImage() {
 		this(Size.EMPTYNESS, "");
 	}
 
-	public Image(final Size imageSize, final String url) {
+	public AImage(final Size imageSize, final String url) {
 		this(imageSize, url, null, null);
 	}
 
-	public Image(final Size imageSize, final String url, final String hoverUrl, final String clickUrl) {
+	public AImage(final Size imageSize, final String url, final String hoverUrl, final String clickUrl) {
 		this.imageSize = imageSize;
 		this.url = url;
 		this.hoverUrl = hoverUrl;

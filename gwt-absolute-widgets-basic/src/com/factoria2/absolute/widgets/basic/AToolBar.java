@@ -1,16 +1,16 @@
 package com.factoria2.absolute.widgets.basic;
 
-import com.factoria2.absolute.widgets.AbsWidget;
-import com.factoria2.absolute.widgets.geom.Insets;
-import com.factoria2.absolute.widgets.geom.Size;
-import com.factoria2.absolute.widgets.tools.TextSizer;
+import com.factoria2.absolute.widgets.core.AbsWidget;
+import com.factoria2.absolute.widgets.core.geom.Insets;
+import com.factoria2.absolute.widgets.core.geom.Size;
+import com.factoria2.absolute.widgets.core.tools.TextSizer;
 
 // TODO: implementar la toolbar
-public class ToolBar extends AbsWidget {
+public class AToolBar extends AbsWidget {
 
 	private static final Insets layoutInsets = new Insets(4);
 
-	public ToolBar() {
+	public AToolBar() {
 	}
 
 	@Override

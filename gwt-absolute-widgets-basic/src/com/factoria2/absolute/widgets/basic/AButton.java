@@ -1,22 +1,22 @@
 package com.factoria2.absolute.widgets.basic;
 
-import com.factoria2.absolute.widgets.AbsWidget;
-import com.factoria2.absolute.widgets.geom.Rectangle;
-import com.factoria2.absolute.widgets.geom.Size;
-import com.factoria2.absolute.widgets.tools.TextSizer;
+import com.factoria2.absolute.widgets.core.AbsWidget;
+import com.factoria2.absolute.widgets.core.geom.Rectangle;
+import com.factoria2.absolute.widgets.core.geom.Size;
+import com.factoria2.absolute.widgets.core.tools.TextSizer;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
-public class Button extends AbsWidget {
+public class AButton extends AbsWidget {
 
 	// TODO: pintar el botton no con button de GWT sino con nuestras movidas
 	private com.google.gwt.user.client.ui.Button button;
 
-	public Button() {
+	public AButton() {
 		this("");
 	}
 
-	public Button(final String text) {
+	public AButton(final String text) {
 		button = new com.google.gwt.user.client.ui.Button(text);
 		addChild(button);
 	}

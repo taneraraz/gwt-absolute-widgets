@@ -1,20 +1,20 @@
 package com.factoria2.absolute.widgets.basic;
 
-import com.factoria2.absolute.widgets.AbsWidget;
-import com.factoria2.absolute.widgets.geom.Rectangle;
-import com.factoria2.absolute.widgets.geom.Size;
+import com.factoria2.absolute.widgets.core.AbsWidget;
+import com.factoria2.absolute.widgets.core.geom.Rectangle;
+import com.factoria2.absolute.widgets.core.geom.Size;
 import com.google.gwt.user.client.ui.Frame;
 
-public class Browser extends AbsWidget {
+public class ABrowser extends AbsWidget {
 
 	private static final Size defaultSize = new Size(640, 480);
 	private Frame frame;
 
-	public Browser() {
+	public ABrowser() {
 		this("");
 	}
 
-	public Browser(final String url) {
+	public ABrowser(final String url) {
 		frame = new Frame(url);
 		setChildCss(frame, "border", "0");
 		addChild(frame);

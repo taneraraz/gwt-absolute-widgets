@@ -5,24 +5,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.factoria2.absolute.widgets.AbsWidget;
-import com.factoria2.absolute.widgets.aspect.Background;
-import com.factoria2.absolute.widgets.aspect.Border;
-import com.factoria2.absolute.widgets.aspect.Shadow;
-import com.factoria2.absolute.widgets.aspect.background.ColorBackground;
-import com.factoria2.absolute.widgets.aspect.background.LinearGradientBackground;
-import com.factoria2.absolute.widgets.aspect.value.BorderType;
-import com.factoria2.absolute.widgets.aspect.value.Color;
-import com.factoria2.absolute.widgets.aspect.value.HAlignment;
 import com.factoria2.absolute.widgets.basic.event.CommandEvent;
 import com.factoria2.absolute.widgets.basic.event.CommandHandler;
 import com.factoria2.absolute.widgets.basic.event.HasCommandHandlers;
 import com.factoria2.absolute.widgets.basic.event.HasItemSelectionHandlers;
 import com.factoria2.absolute.widgets.basic.event.ItemSelectionEvent;
 import com.factoria2.absolute.widgets.basic.event.ItemSelectionHandler;
-import com.factoria2.absolute.widgets.geom.Insets;
-import com.factoria2.absolute.widgets.geom.Rectangle;
-import com.factoria2.absolute.widgets.geom.Size;
+import com.factoria2.absolute.widgets.core.AbsWidget;
+import com.factoria2.absolute.widgets.core.aspect.Background;
+import com.factoria2.absolute.widgets.core.aspect.Border;
+import com.factoria2.absolute.widgets.core.aspect.Shadow;
+import com.factoria2.absolute.widgets.core.aspect.background.ColorBackground;
+import com.factoria2.absolute.widgets.core.aspect.background.LinearGradientBackground;
+import com.factoria2.absolute.widgets.core.aspect.value.BorderType;
+import com.factoria2.absolute.widgets.core.aspect.value.Color;
+import com.factoria2.absolute.widgets.core.aspect.value.HAlignment;
+import com.factoria2.absolute.widgets.core.geom.Insets;
+import com.factoria2.absolute.widgets.core.geom.Rectangle;
+import com.factoria2.absolute.widgets.core.geom.Size;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 public class Menu extends AbsWidget implements HasCommandHandlers, HasItemSelectionHandlers<MenuItem> {
