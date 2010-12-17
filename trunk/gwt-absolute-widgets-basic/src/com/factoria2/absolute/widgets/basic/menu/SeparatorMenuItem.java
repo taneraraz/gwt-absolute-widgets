@@ -1,6 +1,6 @@
 package com.factoria2.absolute.widgets.basic.menu;
 
-import com.factoria2.absolute.widgets.geom.Size;
+import com.factoria2.absolute.widgets.core.geom.Size;
 import com.google.gwt.user.client.ui.HTML;
 
 public class SeparatorMenuItem extends MenuItem {

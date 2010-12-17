@@ -1,9 +1,9 @@
 package com.factoria2.absolute.widgets.basic.menu;
 
-import com.factoria2.absolute.widgets.AbsWidget;
-import com.factoria2.absolute.widgets.aspect.Background;
-import com.factoria2.absolute.widgets.aspect.background.LinearGradientBackground;
-import com.factoria2.absolute.widgets.aspect.value.Color;
+import com.factoria2.absolute.widgets.core.AbsWidget;
+import com.factoria2.absolute.widgets.core.aspect.Background;
+import com.factoria2.absolute.widgets.core.aspect.background.LinearGradientBackground;
+import com.factoria2.absolute.widgets.core.aspect.value.Color;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;

@@ -1,12 +1,12 @@
 package com.factoria2.absolute.widgets.basic.menu;
 
-import com.factoria2.absolute.widgets.aspect.Font;
-import com.factoria2.absolute.widgets.aspect.value.Color;
-import com.factoria2.absolute.widgets.basic.Image;
-import com.factoria2.absolute.widgets.basic.Label;
-import com.factoria2.absolute.widgets.geom.Insets;
-import com.factoria2.absolute.widgets.geom.Rectangle;
-import com.factoria2.absolute.widgets.geom.Size;
+import com.factoria2.absolute.widgets.basic.AImage;
+import com.factoria2.absolute.widgets.basic.ALabel;
+import com.factoria2.absolute.widgets.core.aspect.Font;
+import com.factoria2.absolute.widgets.core.aspect.value.Color;
+import com.factoria2.absolute.widgets.core.geom.Insets;
+import com.factoria2.absolute.widgets.core.geom.Rectangle;
+import com.factoria2.absolute.widgets.core.geom.Size;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
@@ -22,25 +22,25 @@ public abstract class BasicMenuItem extends MenuItem {
 	protected static final Color normalColor = Color.BLACK;
 	protected static final Color hoverColor = Color.WHITE;
 
-	private Image check;
+	private AImage check;
 	private boolean checked;
-	private Image icon;
-	private Label text;
-	private Label shortcut;
+	private AImage icon;
+	private ALabel text;
+	private ALabel shortcut;
 	private Anchor anchor;
 
 	public BasicMenuItem(final String text, final String icon, final String shortcut, final boolean shortcutVisible) {
-		this.check = new Image(ICON_SIZE, null);
+		this.check = new AImage(ICON_SIZE, null);
 		addChild(this.check);
 
-		this.icon = new Image(ICON_SIZE, icon);
+		this.icon = new AImage(ICON_SIZE, icon);
 		addChild(this.icon);
 
-		this.text = new Label(text);
+		this.text = new ALabel(text);
 		this.text.setFont(defaultFont);
 		addChild(this.text);
 
-		this.shortcut = new Label(shortcut == null ? "" : "^" + shortcut);
+		this.shortcut = new ALabel(shortcut == null ? "" : "^" + shortcut);
 		// TODO: this.shortcut.setHorizontalAlignment right
 		this.shortcut.setFont(defaultFont);
 		addChild(this.shortcut);

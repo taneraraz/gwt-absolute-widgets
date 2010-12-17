@@ -1,19 +1,19 @@
 package com.factoria2.absolute.widgets.basic;
 
-import com.factoria2.absolute.widgets.AbsWidget;
-import com.factoria2.absolute.widgets.geom.Insets;
-import com.factoria2.absolute.widgets.geom.Rectangle;
-import com.factoria2.absolute.widgets.geom.Size;
+import com.factoria2.absolute.widgets.core.AbsWidget;
+import com.factoria2.absolute.widgets.core.geom.Insets;
+import com.factoria2.absolute.widgets.core.geom.Rectangle;
+import com.factoria2.absolute.widgets.core.geom.Size;
 
-public class Panel<T extends AbsWidget> extends AbsWidget {
+public class APanel<T extends AbsWidget> extends AbsWidget {
 
 	private T widget;
 	private Insets insets = Insets.NONE;
 
-	public Panel() {
+	public APanel() {
 	}
 
-	public Panel(final T widget) {
+	public APanel(final T widget) {
 		setWidget(widget);
 	}
 

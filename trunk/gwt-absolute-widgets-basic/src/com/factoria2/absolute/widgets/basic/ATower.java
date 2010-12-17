@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.factoria2.absolute.widgets.AbsWidget;
-import com.factoria2.absolute.widgets.geom.Rectangle;
-import com.factoria2.absolute.widgets.geom.Size;
+import com.factoria2.absolute.widgets.core.AbsWidget;
+import com.factoria2.absolute.widgets.core.geom.Rectangle;
+import com.factoria2.absolute.widgets.core.geom.Size;
 
-public class Tower<T extends AbsWidget> extends AbsWidget {
+public class ATower<T extends AbsWidget> extends AbsWidget {
 
 	private boolean vertical = true;
 	private List<T> children = new ArrayList<T>();
 	private List<T> roChildren = Collections.unmodifiableList(children);
 
-	public Tower() {
+	public ATower() {
 	}
 
-	public Tower(final boolean vertical) {
+	public ATower(final boolean vertical) {
 		setVertical(vertical);
 	}
 
-	public Tower(final boolean vertical, final T... children) {
+	public ATower(final boolean vertical, final T... children) {
 		setVertical(vertical);
 		for (T child : children) {
 			addWidget(child);
